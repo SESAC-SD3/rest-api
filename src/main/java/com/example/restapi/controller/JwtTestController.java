@@ -28,6 +28,19 @@ public class JwtTestController {
      }
 
 
-//     @GetMapping("/validate")
+     @GetMapping("/validate")
+     public ResponseEntity<ApiResponse<Map<String, Object>>> validateToken(
+             @RequestParam String token
+     ) {
+         boolean valid = jwtProvider.validateToken(token);
+         String username = valid ? jwtProvider.getUsername(token) : null;
+
+         return ResponseEntity.ok(ApiResponse.success(
+             Map.of(
+                 "valid", valid,
+                 "username", username
+             )
+         ));
+     }
 
 }
